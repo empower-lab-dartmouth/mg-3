@@ -8,9 +8,7 @@ import {RecoilRoot} from "recoil";
 function App() {
   return (
     <div className="App">
-     <RecoilRoot>
-      {/* <Helmet bodyAttributes={{style: 'background-color : #DDEBE0'}}/> */}
-     
+     <RecoilRoot>     
         <Routes>
            <Route path = "/"  element = {<Main />}/>
            

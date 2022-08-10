@@ -1,0 +1,18 @@
+.main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.start-button{
+    position:absolute;
+    top: 20%;
+    left: 38%;
+}
+
+.danny{
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+}

@@ -1,6 +1,5 @@
-import {currentimage, status} from "./atoms";
+import { status } from "./atoms";
 
 export{
-    currentimage,
-    status
+    status,
 }

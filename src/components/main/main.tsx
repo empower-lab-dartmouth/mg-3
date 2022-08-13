@@ -1,4 +1,6 @@
 import "./main.css";
+import "./index.jsx";
+import "./styles.css";
 import {Button} from '../../editor/button';
 import {ButtonSmall} from '../../editor/button-small';
 import { Link } from "react-router-dom";
@@ -46,11 +48,21 @@ const Main = () =>{
                     </div>  
                     <div className = "choices">
                         <Stack spacing = {10} direction = "column">
-                            <Button>DANI's Wheel</Button>
+                            <Button onClick = {() => setgamestatus(WHEEL)}>DANI's Wheel</Button>
                             <Button>Me</Button>
                         </Stack>
                     </div>      
                 </div>    
+              }
+              {
+                gamestatus == WHEEL &&
+                <body>
+                <div id="wheelOfFortune">
+                    <canvas id="wheel" width="300" height="300"></canvas>
+                    <div id="spin">SPIN</div>
+                </div>
+                </body>
+
               }
         </div>      
     )

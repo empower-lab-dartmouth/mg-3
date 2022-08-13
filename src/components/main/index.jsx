@@ -1,11 +1,10 @@
 const sectors = [
     { color: '#f82', label: ' ' },
     { color: '#0bf', label: ' ' },
+    { color: 'green', label: ' ' },
     { color: '#fb0', label: ' ' },
-    { color: '#0fb', label: ' ' },
     { color: '#b0f', label: ' ' },
-    { color: '#f0b', label: ' ' },
-    { color: '#bf0', label: ' ' }
+    { color: 'red', label: ' ' }
   ]
   
   const rand = (m, M) => Math.random() * (M - m) + m

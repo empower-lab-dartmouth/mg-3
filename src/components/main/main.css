@@ -27,7 +27,7 @@
     position:absolute;
     width: 300px;
     height: 500px;
-    top: 20%;
+    top: 28%;
     left: 30%;
 }
 .text{
@@ -46,7 +46,7 @@
     width: 200px;
     height: 200px;
     left: 30%;
-    top: 15%;
+    top: 20%;
 }
 .choices{
 
@@ -59,4 +59,19 @@
     align-items: center;
     left: 55%;
     top: 40%;
+}
+
+.boxes1{
+    width: 300px;
+    height: 500px;
+    position: absolute;
+    left: 40%;
+    top: 20%;
+}
+.boxes2{
+    width: 300px;
+    height: 500px;
+    position: absolute;
+    left: 65%;
+    top: 20%;
 }

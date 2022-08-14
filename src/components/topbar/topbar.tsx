@@ -4,18 +4,22 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import "./topbar.css";
 import {useRecoilState, useRecoilValue} from "recoil";
+import {READY, CHOOSING, WHEEL, BOXES, ANSWER} from "../../model/status";
+import {status} from "../../store";
 
 
 export const Topbar = () => {
 
+    const [gamestatus, setgamestatus] = useRecoilState(status);
+
     return (
     <div className = "topbar">
         <Button className = "back">
-        <Link to = "/imageselection"  style={{ color: 'inherit', textDecoration: 'inherit'}}> 
+        <Link to = "/"  style={{ color: 'inherit', textDecoration: 'inherit'}}> 
             <img  src = {"../UI/back.png"}  width="60px" height="30px"/>
         </Link>
         </Button>
-        <Button className = "home">
+        <Button className = "home" onClick = {() => setgamestatus(READY)}>
         <Link to = "/"  style={{ color: 'inherit', textDecoration: 'inherit'}}> 
             <img src = {"../UI/home.png"} width = "60px" height = "45px"/>
         </Link>

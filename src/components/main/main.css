@@ -16,6 +16,17 @@
     bottom: 10%;
     left: 10%;
 }
+.dannywheel{
+    position: absolute;
+    top: 40%;
+    left: 10%;
+}
+
+.spin{
+    position: absolute;
+    top: 70%;
+    left: 10%;
+}
 
 .askbubble{
     position: absolute;

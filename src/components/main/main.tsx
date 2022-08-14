@@ -131,6 +131,17 @@ const Main = () =>{
                    </div>
                    
             }
+            {
+                gamestatus == WHEEL &&
+                <div>
+                     <div className = "dannywheel">
+                       <img src = {"../UI/drachensmile.png"} width = "150px" height = "180px"/>
+                        </div>
+                        <div className = "spin">
+                        <Button>Spin</Button>
+                        </div>
+                </div>    
+            }
               {/*
                 gamestatus == WHEEL &&
                 <body>

@@ -46,10 +46,15 @@ const Main = () =>{
                     </div>  
                     <div className = "choices">
                         <Stack spacing = {10} direction = "column">
-                            <Button>DANI's Wheel</Button>
+                            <Button onClick = {() => setgamestatus(BOXES)}>DANI's Wheel</Button>
                             <Button>Me</Button>
                         </Stack>
                     </div>      
+                </div>    
+              }
+              {     gamestatus == BOXES &&
+                <div>
+
                 </div>    
               }
         </div>      

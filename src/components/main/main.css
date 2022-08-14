@@ -45,8 +45,8 @@
     position: absolute;
     width: 200px;
     height: 200px;
-    left: 30%;
-    top: 20%;
+    left: 28%;
+    top: 25%;
 }
 .choices{
 
@@ -74,4 +74,29 @@
     position: absolute;
     left: 65%;
     top: 20%;
+}
+.introbubble{
+    position: absolute;
+    top: 10%;
+    left: 5%;
+}
+.introtexts{
+    width: 620px;
+    height: 250px;
+    position: absolute;
+    left: 35%;
+    top: 15%;
+    overflow-y: scroll;
+}
+.smalltext{
+    font-size: 20px;
+    font-family: Harmattan;
+    font-weight: bold;
+    line-height: 40px;
+}
+.title{
+    width: 620px;
+    position: absolute;
+    left: 35%;
+    top: 5%;
 }

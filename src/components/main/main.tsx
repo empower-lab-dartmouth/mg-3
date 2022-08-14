@@ -4,9 +4,9 @@ import "./styles.css";
 import {Button} from '../../editor/button';
 import {ButtonSmall} from '../../editor/button-small';
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useRef, useLayoutEffect }  from "react";
 import Stack from "@mui/material/Stack";
-import {status} from "../../store";
+import {status, words} from "../../store";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {READY, CHOOSING, WHEEL, BOXES, ANSWER} from "../../model/status";
 import { intro1, introlist } from "../database/introductions";
@@ -14,10 +14,30 @@ import { intro1, introlist } from "../database/introductions";
 const Main = () =>{
     
     const [gamestatus, setgamestatus] = useRecoilState(status);
+    const [speakwords, setspeakwords] = useRecoilState(words);
+    const message = new SpeechSynthesisUtterance();
+    message.text = speakwords;
 
     const setethics = (group: number, index: number) => {
         setgamestatus(ANSWER);
     }
+
+    const isFirst = useRef(true);
+
+    useEffect(() => {
+         window.speechSynthesis.speak(message);
+    },[speakwords])
+
+    useEffect(() => {
+        if(gamestatus == ANSWER){
+            const words = document.getElementById("chatbox1")!.innerHTML +  document.getElementById("chatbox2")!.innerHTML;
+            setspeakwords(words);
+        }
+        else if(gamestatus != WHEEL && gamestatus != BOXES){
+        const words = document.getElementById("chatbox")!.innerHTML
+       setspeakwords(words);
+       }
+    }, [gamestatus]);
 
     return (
         <div className="main">
@@ -28,7 +48,7 @@ const Main = () =>{
             </div>
             <div className = "askbubble">
             <div className = "content">
-                    <p className = "text">
+                    <p id = "chatbox" className = "text">
                     Let’s learn more about AI in real life. But first, let’s choose a topic!
                     </p>
                     <ButtonSmall onClick = {() => setgamestatus(CHOOSING)}>Confirm</ButtonSmall>
@@ -45,7 +65,7 @@ const Main = () =>{
                     </div>
                     <div className = "smallaskbubble">
                         <div className = "choosemodel">
-                              <p className = "text">
+                              <p id = "chatbox" className = "text">
                                 Who is choosing today?
                               </p>  
                         </div>    
@@ -97,12 +117,12 @@ const Main = () =>{
                         </div>
                         <div className = "introbubble">
                             <div className = "title">
-                               <p className = "text">
+                               <p id = "chatbox1" className = "text">
                                    {introlist[0][2]}
                                 </p> 
                             </div>    
                             <div className = "introtexts">
-                                <p className = "smalltext">
+                                <p id = "chatbox2" className = "smalltext">
                                     {intro1}
                                 </p>
                              </div>   

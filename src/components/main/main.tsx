@@ -4,22 +4,40 @@ import "./styles.css";
 import {Button} from '../../editor/button';
 import {ButtonSmall} from '../../editor/button-small';
 import { Link } from "react-router-dom";
-import React, { useEffect, useRef, useLayoutEffect }  from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect }  from "react";
 import Stack from "@mui/material/Stack";
 import {status, words} from "../../store";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {READY, CHOOSING, WHEEL, BOXES, ANSWER} from "../../model/status";
 import { intro1, introlist } from "../database/introductions";
+import { Wheel } from 'react-custom-roulette'
+
 
 const Main = () =>{
     
     const [gamestatus, setgamestatus] = useRecoilState(status);
     const [speakwords, setspeakwords] = useRecoilState(words);
+    const [mustSpin, setMustSpin] = useState(false);
+    const [topicnumber, settopicnumber] = useState(0);
     const message = new SpeechSynthesisUtterance();
     message.text = speakwords;
 
+    const data = [
+        { option: '0', style: { backgroundColor: 'white', textColor: "white" }},
+        { option: '1', style: { backgroundColor: 'red', textColor: "red" }},
+        { option: '2', style: { backgroundColor: 'blue', textColor: "blue" }},
+        { option: '3', style: { backgroundColor: 'yellow', textColor: "yellow" }},
+        { option: '4', style: { backgroundColor: 'green', textColor: "green" }},
+      ]
+
     const setethics = (group: number, index: number) => {
         setgamestatus(ANSWER);
+    }
+
+    const spinwheel = () => {
+        const newrandom = Math.floor(Math.random() * data.length);
+        settopicnumber(newrandom);
+        setMustSpin(true);
     }
 
     const isFirst = useRef(true);
@@ -138,20 +156,22 @@ const Main = () =>{
                        <img src = {"../UI/drachensmile.png"} width = "150px" height = "180px"/>
                         </div>
                         <div className = "spin">
-                        <Button>Spin</Button>
+                        <Button onClick = {()=> spinwheel()}>Spin</Button>
+                        </div>
+                        <div className = "wheel">
+                        <Wheel
+                           mustStartSpinning={mustSpin}
+                           prizeNumber={3}
+                           data={data}
+                           backgroundColors={['#3e3e3e', '#df3428']}
+                           textColors={['#ffffff']}
+                           onStopSpinning={() => {
+                            setMustSpin(false);
+                          }}
+                        />
                         </div>
                 </div>    
             }
-              {/*
-                gamestatus == WHEEL &&
-                <body>
-                <div id="wheelOfFortune">
-                    <canvas id="wheel" width="300" height="300"></canvas>
-                    <div id="spin">SPIN</div>
-                </div>
-                </body>
-                   */
-              }
         </div>      
     )
 };

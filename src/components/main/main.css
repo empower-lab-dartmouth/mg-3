@@ -52,6 +52,12 @@
     font-weight: bold;
     line-height: 50px;
 }
+.text-small{
+    font-size: 18px;
+    font-family: Harmattan;
+    font-weight: bold;
+    line-height: 50px;
+}
 .smallaskbubble{
     position: absolute;
     top: 10%;
@@ -115,4 +121,9 @@
     position: absolute;
     left: 35%;
     top: 5%;
+}
+.ready-confirm{
+    position :absolute;
+    right: 10%;
+    bottom: 20%;
 }

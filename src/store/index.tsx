@@ -1,5 +1,5 @@
-import { status, words } from "./atoms";
+import { status, words, parentname, childname } from "./atoms";
 
 export{
-    status, words
+    status, words, parentname, childname
 }

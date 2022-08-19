@@ -9,3 +9,13 @@ export const words = atom({
     key: "words",
     default: "NA",
 })
+
+export const parentname = atom({
+    key: "parent-name",
+    default: "PA",
+})
+
+export const childname = atom({
+    key: "child-name",
+    default: "CH",
+})

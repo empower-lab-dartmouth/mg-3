@@ -6,9 +6,9 @@ import {ButtonSmall} from '../../editor/button-small';
 import { Link } from "react-router-dom";
 import React, { useState, useEffect, useRef, useLayoutEffect }  from "react";
 import Stack from "@mui/material/Stack";
-import {status, words} from "../../store";
+import {status, words, parentname, childname} from "../../store";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {READY, CHOOSING, WHEEL, BOXES, ANSWER} from "../../model/status";
+import {READY, READY2, READY3, READY4, CHOOSING, WHEEL, BOXES, ANSWER} from "../../model/status";
 import { intro1, introlist } from "../database/introductions";
 import { Wheel } from 'react-custom-roulette'
 
@@ -19,6 +19,8 @@ const Main = () =>{
     const [speakwords, setspeakwords] = useRecoilState(words);
     const [mustSpin, setMustSpin] = useState(false);
     const [topicnumber, settopicnumber] = useState(0);
+    const parent = useRecoilValue(parentname);
+    const child = useRecoilValue(childname);
     const message = new SpeechSynthesisUtterance();
     message.text = speakwords;
 
@@ -27,7 +29,6 @@ const Main = () =>{
         { option: '1', style: { backgroundColor: 'red', textColor: "red" }},
         { option: '2', style: { backgroundColor: 'blue', textColor: "blue" }},
         { option: '3', style: { backgroundColor: 'yellow', textColor: "yellow" }},
-        { option: '4', style: { backgroundColor: 'green', textColor: "green" }},
       ]
 
     const setethics = (group: number, index: number) => {
@@ -66,12 +67,71 @@ const Main = () =>{
             </div>
             <div className = "askbubble">
             <div className = "content">
-                    <p id = "chatbox" className = "text">
-                    Let’s learn more about AI in real life. But first, let’s choose a topic!
+                    <p id = "chatbox" className = "text-small">
+                    Hey there, {parent}! I'm here to offer support as you help {child} learn about and discuss important topics regarding AI Ethics.
                     </p>
-                    <ButtonSmall onClick = {() => setgamestatus(CHOOSING)}>Confirm</ButtonSmall>
                 </div>
                 <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+            </div>
+            <div className = "ready-confirm">
+            <ButtonSmall onClick = {() => setgamestatus(READY2)}>Confirm</ButtonSmall>
+            </div>
+            </div>
+              }
+                  { gamestatus == READY2 &&
+               <div>
+            <div className = "danny">
+                <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+            </div>
+            <div className = "askbubble">
+            <div className = "content">
+                    <p id = "chatbox" className = "text-small">
+                    As we explore this learning module, I will present a few options at each step so you can guide the learning in the ways you most prefer.
+                    </p>
+                </div>
+                <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+            </div>
+            <div className = "ready-confirm">
+            <ButtonSmall onClick = {() => setgamestatus(READY3)}>Confirm</ButtonSmall>
+            </div>
+            </div>
+              }
+                    { gamestatus == READY3 &&
+               <div>
+            <div className = "danny">
+                <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+            </div>
+            <div className = "askbubble">
+            <div className = "content">
+                    <p id = "chatbox" className = "text">
+                    Ok! Are we ready to start exploring AI Ethics?
+                    </p>
+                </div>
+                <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+            </div>
+            <div className = "ready-confirm">
+            <Stack spacing = {5} direction = "column">
+            <ButtonSmall onClick = {() => setgamestatus(READY4)}>Yes</ButtonSmall>
+            <ButtonSmall onClick = {() => setgamestatus(READY4)}>No</ButtonSmall>
+            </Stack>
+            </div>
+            </div>
+              }
+                { gamestatus == READY4 &&
+               <div>
+            <div className = "danny">
+                <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+            </div>
+            <div className = "askbubble">
+            <div className = "content">
+                    <p id = "chatbox" className = "text">
+                    Great! Ok {child}, make sure that you press the button that {parent} asks you to choose!
+                    </p>
+                </div>
+                <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+            </div>
+            <div className = "ready-confirm">
+            <ButtonSmall onClick = {() => setgamestatus(CHOOSING)}>Confirm</ButtonSmall>
             </div>
             </div>
               }
@@ -83,8 +143,8 @@ const Main = () =>{
                     </div>
                     <div className = "smallaskbubble">
                         <div className = "choosemodel">
-                              <p id = "chatbox" className = "text">
-                                Who is choosing today?
+                              <p id = "chatbox" className = "text-small">
+                              How should we select the topic we are going to explore?
                               </p>  
                         </div>    
                        <img src = {"../UI/resbubble.png"} width = "400px" height = "400px" />

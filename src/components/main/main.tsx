@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef }  from "react";
 import Stack from "@mui/material/Stack";
 import {status, words, parentname, childname} from "../../store";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {READY, READY2, READY3, READY4, CHOOSING, WHEEL, BOXES, ANSWER} from "../../model/status";
+import {READY, READY2, READY3, READY4, CHOOSING, WHEEL, BOXES, CHOOSING2, ANSWER, ANSWER2, ANSWER3, ANSWER4, LEARN, STORY, END} from "../../model/status";
 import { intro1, introlist } from "../database/introductions";
 import { Wheel } from 'react-custom-roulette'
 
@@ -33,7 +33,7 @@ const Main = () =>{
       ]
 
     const setethics = (group: number, index: number) => {
-        setgamestatus(ANSWER);
+        setgamestatus(CHOOSING2);
     }
 
     const spinwheel = () => {
@@ -196,6 +196,86 @@ const Main = () =>{
                     </div>      
                 </div>   
             } 
+             {
+                gamestatus == CHOOSING2 &&
+                   <div>
+                         <div className = "danny">
+                       <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+                        </div>
+                        <div className = "askbubble-left">
+                            <div className = "content-big">
+                                <p id = "chatbox1" className = "text">
+                                   {introlist[0][0]}
+                                </p> 
+                                <p id = "chatbox" className = "text-small">
+                                Ok {parent}, do you think we first need to learn about this topic or should we go straight into discussing a story related to this topic?
+                                </p>
+                             </div>
+                             <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+                         </div>   
+                         <div className = "choices-right">
+                        <Stack spacing = {10} direction = "column">
+                            <Button onClick = {() => setgamestatus(LEARN)}>Learn</Button>
+                            <Button onClick = {() => setgamestatus(STORY)}>Story</Button>
+                        </Stack>
+                        </div>      
+                   </div>
+                   
+            }
+              {
+                gamestatus == LEARN &&
+                   <div>
+                         <div className = "danny">
+                       <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+                        </div>
+                        <div className = "askbubble-left">
+                            <div className = "content-big">
+                                <p id = "chatbox1" className = "text">
+                                   {introlist[0][0]}
+                                </p> 
+                                <p id = "chatbox" className = "text-small">
+                                How should we learn about this topic?
+                                </p>
+                             </div>
+                             <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+                         </div>   
+                         <div className = "choices-right">
+                        <Stack spacing = {5} direction = "column">
+                            <Button onClick = {() => setgamestatus(ANSWER)}>Introductory Summary</Button>
+                            <Button onClick = {() => setgamestatus(ANSWER2)}>Links to Websites</Button>
+                            <Button onClick = {() => setgamestatus(ANSWER3)}>Web Search</Button>
+                        </Stack>
+                        </div>      
+                   </div>
+                   
+            }
+            {
+                gamestatus == ANSWER4 &&
+                   <div>
+                         <div className = "danny">
+                       <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+                        </div>
+                        <div className = "askbubble-left">
+                            <div className = "content-big">
+                                <p id = "chatbox1" className = "text">
+                                   {introlist[0][0]}
+                                </p> 
+                                <p id = "chatbox" className = "text-small">
+                                Should we explore some other ways to learn about this topic or should we move onto the story?
+                                </p>
+                             </div>
+                             <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+                         </div>   
+                         <div className = "choices-right">
+                        <Stack spacing = {5} direction = "column">
+                            <Button onClick = {() => setgamestatus(LEARN)}>Keep Learning</Button>
+                            <Button onClick = {() => setgamestatus(STORY)}>Story Discussion</Button>
+                            <Button onClick = {() => setgamestatus(END)}>Exit Module</Button>
+                        </Stack>
+                        </div>      
+                   </div>
+                   
+            }
             {
                 gamestatus == ANSWER &&
                    <div>
@@ -205,7 +285,7 @@ const Main = () =>{
                         <div className = "introbubble">
                             <div className = "title">
                                <p id = "chatbox1" className = "text">
-                                   {introlist[0][2]}
+                                   {introlist[0][0]}
                                 </p> 
                             </div>    
                             <div className = "introtexts">
@@ -214,7 +294,10 @@ const Main = () =>{
                                 </p>
                              </div>   
                         <img src = {"../UI/conver.png"} width = "1200px" height = "550px"/>
-                         </div>   
+                         </div>  
+                         <div className = "ready-confirm">
+                            <ButtonSmall onClick = {() => setgamestatus(ANSWER4)}>Confirm</ButtonSmall>
+                         </div> 
                    </div>
                    
             }
@@ -250,7 +333,7 @@ const Main = () =>{
                             }
                             {   spined == true &&
                                <Stack spacing = {5} direction = "row">
-                                 <Button onClick = {()=> setgamestatus(ANSWER)}>Let's Explore</Button>
+                                 <Button onClick = {()=> setgamestatus(CHOOSING2)}>Let's Explore</Button>
                                  <Button onClick = {()=> spinwheel()}>Spin Again</Button>
                                </Stack>
                             }

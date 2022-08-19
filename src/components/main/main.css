@@ -38,6 +38,12 @@
     top: 5%;
     left: 30%;
 }
+.askbubble-left{
+    position: absolute;
+    top: 5%;
+    left: 20%;
+}
+
 
 
 .content{
@@ -46,6 +52,13 @@
     height: 500px;
     top: 28%;
     left: 30%;
+}
+.content-big{
+    position:absolute;
+    width: 350px;
+    height: 500px;
+    top: 28%;
+    left: 25%;
 }
 .text{
     font-size: 30px;
@@ -57,7 +70,7 @@
     font-size: 18px;
     font-family: Harmattan;
     font-weight: bold;
-    line-height: 50px;
+    line-height: 35px;
 }
 .smallaskbubble{
     position: absolute;
@@ -88,6 +101,20 @@
     left: 55%;
     top: 40%;
 }
+
+.choices-right{
+
+    position: absolute;
+    height: 400px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    left: 65%;
+    top: 40%;
+}
+
 
 .boxes1{
     width: 300px;

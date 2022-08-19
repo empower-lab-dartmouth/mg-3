@@ -19,6 +19,7 @@ const Main = () =>{
     const [speakwords, setspeakwords] = useRecoilState(words);
     const [mustSpin, setMustSpin] = useState(false);
     const [topicnumber, settopicnumber] = useState(0);
+    const [spined, setspined] = useState(false);
     const parent = useRecoilValue(parentname);
     const child = useRecoilValue(childname);
     const message = new SpeechSynthesisUtterance();
@@ -162,6 +163,14 @@ const Main = () =>{
                    <div className = "danny">
                        <img src = {"../UI/drachensmile.png"} width = "210px" height = "250px"/>
                     </div>
+                    <div className = "smallaskbubble">
+                        <div className = "choosemodel">
+                              <p id = "chatbox" className = "text">
+                              Please pick a topic for us to explore!
+                              </p>  
+                        </div>    
+                       <img src = {"../UI/resbubble.png"} width = "400px" height = "400px" />
+                    </div> 
                     <div className = "boxes1">
                         <Stack spacing = {10} direction = "column">
                             {
@@ -215,8 +224,36 @@ const Main = () =>{
                      <div className = "dannywheel">
                        <img src = {"../UI/drachensmile.png"} width = "150px" height = "180px"/>
                         </div>
+                        <div className = "smallaskbubble-wheel">
+                        <div className = "choosemodel">
+                            {   mustSpin == false && spined == false &&
+                              <p id = "chatbox" className = "text-small">
+                              Spin the wheel and I'll randomly pick a topic for us to explore!
+                              </p>  
+                            }       
+                              {   mustSpin == true &&
+                              <p id = "chatbox" className = "text">
+                             And the topic is....
+                              </p>  
+                            }  
+                             {   mustSpin == false && spined == true &&
+                              <p id = "chatbox" className = "text">
+                              And the topic is {topicnumber}
+                              </p>  
+                            }                      
+                        </div>    
+                       <img src = {"../UI/resbubble.png"} width = "400px" height = "400px" />
+                    </div> 
                         <div className = "spin">
+                            { spined == false &&
                         <Button onClick = {()=> spinwheel()}>Spin</Button>
+                            }
+                            {   spined == true &&
+                               <Stack spacing = {5} direction = "row">
+                                 <Button onClick = {()=> setgamestatus(ANSWER)}>Let's Explore</Button>
+                                 <Button onClick = {()=> spinwheel()}>Spin Again</Button>
+                               </Stack>
+                            }
                         </div>
                         <div className = "wheel">
                         <Wheel
@@ -227,6 +264,7 @@ const Main = () =>{
                            textColors={['#ffffff']}
                            onStopSpinning={() => {
                             setMustSpin(false);
+                            setspined(true);
                           }}
                         />
                         </div>

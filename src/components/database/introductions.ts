@@ -1,6 +1,6 @@
 export const introlist = [
-    ["Technical Safety", "Transparency and Privacy", "Machine Learning Bias", "AI-powered Addiction"],
-    ["Environmental Effects", "Wealth Inequality", "AI Personhood", "Unemployment"]
+    ["Machine Learning Bias", "AI-powered Addiction"],
+    ["AI Personhood", "Unemployment"]
 ];
 
 export const intro1 = 

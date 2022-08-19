@@ -103,7 +103,6 @@
 }
 
 .choices-right{
-
     position: absolute;
     height: 400px;
     width: 400px;
@@ -113,6 +112,18 @@
     align-items: center;
     left: 65%;
     top: 40%;
+}
+
+.choices-down{
+    position: absolute;
+    height: 400px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    left: 60%;
+    top: 50%;
 }
 
 

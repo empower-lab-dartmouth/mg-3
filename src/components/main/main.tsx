@@ -4,7 +4,7 @@ import "./styles.css";
 import {Button} from '../../editor/button';
 import {ButtonSmall} from '../../editor/button-small';
 import { Link } from "react-router-dom";
-import React, { useState, useEffect, useRef, useLayoutEffect }  from "react";
+import React, { useState, useEffect, useRef }  from "react";
 import Stack from "@mui/material/Stack";
 import {status, words, parentname, childname} from "../../store";
 import {useRecoilState, useRecoilValue} from "recoil";

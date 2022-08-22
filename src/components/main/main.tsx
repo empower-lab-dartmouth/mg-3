@@ -6,12 +6,15 @@ import {ButtonSmall} from '../../editor/button-small';
 import { Link } from "react-router-dom";
 import React, { useState, useEffect, useRef }  from "react";
 import Stack from "@mui/material/Stack";
+import Input from '@mui/material/Input';
+import TextField from '@mui/material/TextField';
 import {status, words, parentname, childname} from "../../store";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {READY, READY2, READY3, READY4, CHOOSING, WHEEL, BOXES, CHOOSING2, 
-    ANSWER, ANSWER2, ANSWER3, ANSWER4, LEARN, STORY, STORY2, STORY3, STORY4, STORY5, END} from "../../model/status";
+    ANSWER, ANSWER2, ANSWER3, ANSWER4, LEARN, STORY, STORY2, STORY3, STORY4, STORY5, END,END2,END3,END4} from "../../model/status";
 import { intro1, introlist } from "../database/introductions";
 import { Wheel } from 'react-custom-roulette'
+import useSpeechToText from 'react-hook-speech-to-text';
 
 
 const Main = () =>{
@@ -26,6 +29,20 @@ const Main = () =>{
     const child = useRecoilValue(childname);
     const message = new SpeechSynthesisUtterance();
     message.text = speakwords;
+
+    const {
+        error,
+        interimResult,
+        isRecording,
+        results,
+        startSpeechToText,
+        stopSpeechToText,
+        setResults,
+      } = useSpeechToText({
+        continuous: true,
+        useLegacyResults: false
+      });
+    
 
     const data = [
         { option: '0', style: { backgroundColor: 'white', textColor: "white" }},
@@ -42,6 +59,26 @@ const Main = () =>{
         const newrandom = Math.floor(Math.random() * data.length);
         settopicnumber(newrandom);
         setMustSpin(true);
+    }
+
+    const start = () => {
+        startSpeechToText();
+    }
+
+    const stop = () => {
+        stopSpeechToText();
+        let ans = (document.getElementById("feedback") as  HTMLInputElement).value;  
+
+        results.map((result: any, index) => {
+         if(result.transcript != "undefined"){
+            ans = result.transcript;
+        }
+        return true;
+       });
+
+       (document.getElementById("feedback") as HTMLInputElement).value = ans;
+       setResults([]);
+       
     }
 
     const isFirst = useRef(true);
@@ -115,7 +152,7 @@ const Main = () =>{
             <div className = "ready-confirm">
             <Stack spacing = {5} direction = "column">
             <ButtonSmall onClick = {() => setgamestatus(READY4)}>Yes</ButtonSmall>
-            <ButtonSmall onClick = {() => setgamestatus(READY4)}>No</ButtonSmall>
+            <ButtonSmall onClick = {() => setgamestatus(END)}>No</ButtonSmall>
             </Stack>
             </div>
             </div>
@@ -292,8 +329,52 @@ const Main = () =>{
                          </div>   
                          <div className = "choices-right">
                         <Stack spacing = {5} direction = "column">
-                            <Button onClick = {() => {setgamestatus(STORY3); setreadstory(false)}}>I will read!</Button>
+                            <Button onClick = {() => {setgamestatus(STORY4); setreadstory(false)}}>I will read!</Button>
                             <Button onClick = {() => {setgamestatus(STORY3); setreadstory(true)}}>Dani will read!</Button>
+                        </Stack>
+                        </div>    
+                   </div>    
+            }
+                {
+                gamestatus == STORY4 &&
+                   <div>
+                         <div className = "danny">
+                       <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+                        </div>
+                        <div className = "askbubble-left">
+                            <div className = "content-big">
+                            <p id = "chatbox1" className = "text">
+                                   {introlist[0][0]}
+                                </p> 
+                                <p id = "chatbox" className = "text-small">
+                                Awesome! Let's kick-off the story discussion with some questions. And feel free to take the discussions in any direction you like!
+                                </p>
+                             </div>
+                             <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+                         </div>   
+                         <div className = "choices-down">
+                            <Button onClick = {() => setgamestatus(STORY5)}>Confirm</Button>
+                        </div>      
+                   </div>    
+            }
+                    {
+                gamestatus == STORY5 &&
+                   <div>
+                         <div className = "danny">
+                       <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+                        </div>
+                        <div className = "askbubble-left">
+                            <div className = "content">
+                                <p id = "chatbox" className = "text-small">
+                                Thank you for exploring {introlist[0][0]} with me! Should we explore another topic or is that enough exploration for now?
+                                </p>
+                             </div>
+                             <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+                         </div>   
+                         <div className = "choices-right">
+                        <Stack spacing = {5} direction = "column">
+                            <Button onClick = {() => setgamestatus(READY4)}>Explore a new topic</Button>
+                            <Button onClick = {() => setgamestatus(END)}>Exit Module</Button>
                         </Stack>
                         </div>    
                    </div>    
@@ -453,6 +534,95 @@ const Main = () =>{
                         </div>
                 </div>    
             }
+              { gamestatus == END &&
+               <div>
+            <div className = "danny">
+                <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+            </div>
+            <div className = "askbubble">
+            <div className = "content">
+                    <p id = "chatbox" className = "text">
+                    We can explore this module again later!
+                    </p>
+                </div>
+                <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+            </div>
+            <div className = "ready-confirm">
+            <ButtonSmall onClick = {() => setgamestatus(END2)}>Confirm</ButtonSmall>
+            </div>
+            </div>
+              }
+               { gamestatus == END2 &&
+               <div>
+            <div className = "danny">
+                <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+            </div>
+            <div className = "askbubble">
+            <div className = "content">
+                    <p id = "chatbox" className = "text">
+                    Would you like to share any feedback at this time to help us improve this module?
+                    </p>
+                </div>
+                <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+            </div>
+            <div className = "choices-right">
+                        <Stack spacing = {5} direction = "column">
+                            <Button onClick = {() => setgamestatus(END3)}>Yes</Button>
+                            <Button onClick = {() => setgamestatus(READY)}>No</Button>
+                        </Stack>
+                        </div>      
+            </div>
+              }
+               { gamestatus == END3 &&
+               <div>
+            <div className = "danny">
+                <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+            </div>
+            <div className = "askbubble-left">
+            <div className = "content">
+                    <p id = "chatbox" className = "text">
+                    Thank you! Please feel free to share any and all relevant feedback:
+                    </p>
+                </div>
+                <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+            </div>
+            <div className = "input-box">
+            <TextField
+                    id="feedback"
+                    multiline
+                    rows={12}
+                    inputProps = {{style: {fontSize: 20}}}
+                    fullWidth 
+                    margin = "normal"
+                 />
+            <Button  variant="outlined"onClick={isRecording ? stop :  start}>
+              {isRecording ? 'Recording' : 'Record'}
+           </Button>
+
+            </div>
+            <div className = "ready-confirm">
+            <ButtonSmall onClick = {() => setgamestatus(END4)}>Confirm</ButtonSmall>
+            </div>
+            </div>
+              }
+               { gamestatus == END4 &&
+               <div>
+            <div className = "danny">
+                <img src = {"../UI/drachenispy.png"} width = "210px" height = "250px"/>
+            </div>
+            <div className = "askbubble">
+            <div className = "content">
+                    <p id = "chatbox" className = "text">
+                    We have recorded your feedback, thanks again!
+                    </p>
+                </div>
+                <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
+            </div>
+            <div className = "ready-confirm">
+            <ButtonSmall onClick = {() => setgamestatus(READY)}>Confirm</ButtonSmall>
+            </div>
+            </div>
+              }
         </div>      
     )
 };

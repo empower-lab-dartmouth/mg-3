@@ -17,3 +17,6 @@ export const STORY3 = 6.2;
 export const STORY4 = 6.3;
 export const STORY5 = 6.4;
 export const END = 7;
+export const END2 = 7.1;
+export const END3 = 7.2;
+export const END4 = 7.3;

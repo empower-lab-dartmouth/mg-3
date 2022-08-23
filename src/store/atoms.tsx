@@ -10,6 +10,11 @@ export const words = atom({
     default: "NA",
 })
 
+export const laststep = atom({
+    key: "laststep",
+    default: 0,
+})
+
 export const parentname = atom({
     key: "parent-name",
     default: "PA",

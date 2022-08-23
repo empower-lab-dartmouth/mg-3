@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef }  from "react";
 import Stack from "@mui/material/Stack";
 import Input from '@mui/material/Input';
 import TextField from '@mui/material/TextField';
-import {status, words, parentname, childname} from "../../store";
+import {status, words, parentname, childname, laststep} from "../../store";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {READY, READY2, READY3, READY4, CHOOSING, WHEEL, BOXES, CHOOSING2, 
     ANSWER, ANSWER2, ANSWER3, ANSWER4, LEARN, STORY, STORY2, STORY3, STORY4, STORY5, END,END2,END3,END4} from "../../model/status";
@@ -21,6 +21,7 @@ const Main = () =>{
     
     const [gamestatus, setgamestatus] = useRecoilState(status);
     const [speakwords, setspeakwords] = useRecoilState(words);
+    const [last, setlast] = useRecoilState(laststep);
     const [mustSpin, setMustSpin] = useState(false);
     const [topicnumber, settopicnumber] = useState(0);
     const [spined, setspined] = useState(false);
@@ -51,8 +52,13 @@ const Main = () =>{
         { option: '3', style: { backgroundColor: 'yellow', textColor: "yellow" }},
       ]
 
+    const setstatus = (input: number) => {
+        setlast(gamestatus);
+        setgamestatus(input);
+    }
+
     const setethics = (group: number, index: number) => {
-        setgamestatus(CHOOSING2);
+        setstatus(CHOOSING2);
     }
 
     const spinwheel = () => {
@@ -83,9 +89,13 @@ const Main = () =>{
 
     const isFirst = useRef(true);
 
+    // dont want to spaek out automatically right now
+    /*
     useEffect(() => {
          window.speechSynthesis.speak(message);
     },[speakwords])
+    */
+
 
     useEffect(() => {
         if(gamestatus == ANSWER){
@@ -114,7 +124,7 @@ const Main = () =>{
                 <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
             </div>
             <div className = "ready-confirm">
-            <ButtonSmall onClick = {() => setgamestatus(READY2)}>Confirm</ButtonSmall>
+            <ButtonSmall onClick = {() => setstatus(READY2)}>Confirm</ButtonSmall>
             </div>
             </div>
               }
@@ -132,7 +142,7 @@ const Main = () =>{
                 <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
             </div>
             <div className = "ready-confirm">
-            <ButtonSmall onClick = {() => setgamestatus(READY3)}>Confirm</ButtonSmall>
+            <ButtonSmall onClick = {() => setstatus(READY3)}>Confirm</ButtonSmall>
             </div>
             </div>
               }
@@ -151,8 +161,8 @@ const Main = () =>{
             </div>
             <div className = "ready-confirm">
             <Stack spacing = {5} direction = "column">
-            <ButtonSmall onClick = {() => setgamestatus(READY4)}>Yes</ButtonSmall>
-            <ButtonSmall onClick = {() => setgamestatus(END)}>No</ButtonSmall>
+            <ButtonSmall onClick = {() => setstatus(READY4)}>Yes</ButtonSmall>
+            <ButtonSmall onClick = {() => setstatus(END)}>No</ButtonSmall>
             </Stack>
             </div>
             </div>
@@ -171,7 +181,7 @@ const Main = () =>{
                 <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
             </div>
             <div className = "ready-confirm">
-            <ButtonSmall onClick = {() => setgamestatus(CHOOSING)}>Confirm</ButtonSmall>
+            <ButtonSmall onClick = {() => setstatus(CHOOSING)}>Confirm</ButtonSmall>
             </div>
             </div>
               }
@@ -191,8 +201,8 @@ const Main = () =>{
                     </div>  
                     <div className = "choices">
                         <Stack spacing = {10} direction = "column">
-                            <Button onClick = {() => setgamestatus(WHEEL)}>DANI's Wheel</Button>
-                            <Button onClick = {() => setgamestatus(BOXES)}>Me</Button>
+                            <Button onClick = {() => setstatus(WHEEL)}>DANI's Wheel</Button>
+                            <Button onClick = {() => setstatus(BOXES)}>Me</Button>
                         </Stack>
                     </div>      
                 </div>    
@@ -254,8 +264,8 @@ const Main = () =>{
                          </div>   
                          <div className = "choices-right">
                         <Stack spacing = {10} direction = "column">
-                            <Button onClick = {() => setgamestatus(LEARN)}>Learn</Button>
-                            <Button onClick = {() => setgamestatus(STORY)}>Story</Button>
+                            <Button onClick = {() => setstatus(LEARN)}>Learn</Button>
+                            <Button onClick = {() => setstatus(STORY)}>Story</Button>
                         </Stack>
                         </div>      
                    </div>
@@ -280,9 +290,9 @@ const Main = () =>{
                          </div>   
                          <div className = "choices-right">
                         <Stack spacing = {5} direction = "column">
-                            <Button onClick = {() => setgamestatus(ANSWER)}>Introductory Summary</Button>
-                            <Button onClick = {() => setgamestatus(ANSWER2)}>Links to Websites</Button>
-                            <Button onClick = {() => setgamestatus(ANSWER3)}>Web Search</Button>
+                            <Button onClick = {() => setstatus(ANSWER)}>Introductory Summary</Button>
+                            <Button onClick = {() => setstatus(ANSWER2)}>Links to Websites</Button>
+                            <Button onClick = {() => setstatus(ANSWER3)}>Web Search</Button>
                         </Stack>
                         </div>      
                    </div>
@@ -306,7 +316,7 @@ const Main = () =>{
                              <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
                          </div>   
                          <div className = "choices-down">
-                            <Button onClick = {() => setgamestatus(STORY2)}>Confirm</Button>
+                            <Button onClick = {() => setstatus(STORY2)}>Confirm</Button>
                         </div>      
                    </div>    
             }
@@ -329,8 +339,8 @@ const Main = () =>{
                          </div>   
                          <div className = "choices-right">
                         <Stack spacing = {5} direction = "column">
-                            <Button onClick = {() => {setgamestatus(STORY4); setreadstory(false)}}>I will read!</Button>
-                            <Button onClick = {() => {setgamestatus(STORY3); setreadstory(true)}}>Dani will read!</Button>
+                            <Button onClick = {() => {setstatus(STORY4); setreadstory(false)}}>I will read!</Button>
+                            <Button onClick = {() => {setstatus(STORY3); setreadstory(true)}}>Dani will read!</Button>
                         </Stack>
                         </div>    
                    </div>    
@@ -353,7 +363,7 @@ const Main = () =>{
                              <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
                          </div>   
                          <div className = "choices-down">
-                            <Button onClick = {() => setgamestatus(STORY5)}>Confirm</Button>
+                            <Button onClick = {() => setstatus(STORY5)}>Confirm</Button>
                         </div>      
                    </div>    
             }
@@ -373,8 +383,8 @@ const Main = () =>{
                          </div>   
                          <div className = "choices-right">
                         <Stack spacing = {5} direction = "column">
-                            <Button onClick = {() => setgamestatus(READY4)}>Explore a new topic</Button>
-                            <Button onClick = {() => setgamestatus(END)}>Exit Module</Button>
+                            <Button onClick = {() => setstatus(READY4)}>Explore a new topic</Button>
+                            <Button onClick = {() => setstatus(END)}>Exit Module</Button>
                         </Stack>
                         </div>    
                    </div>    
@@ -398,9 +408,9 @@ const Main = () =>{
                          </div>   
                          <div className = "choices-right">
                         <Stack spacing = {5} direction = "column">
-                            <Button onClick = {() => setgamestatus(LEARN)}>Keep Learning</Button>
-                            <Button onClick = {() => setgamestatus(STORY)}>Story Discussion</Button>
-                            <Button onClick = {() => setgamestatus(END)}>Exit Module</Button>
+                            <Button onClick = {() => setstatus(LEARN)}>Keep Learning</Button>
+                            <Button onClick = {() => setstatus(STORY)}>Story Discussion</Button>
+                            <Button onClick = {() => setstatus(END)}>Exit Module</Button>
                         </Stack>
                         </div>      
                    </div>    
@@ -425,7 +435,7 @@ const Main = () =>{
                          <div className = "choices-right">
                         <Stack spacing = {5} direction = "column">
                             <Button onClick = {() => window.open("https://www.google.com/search?q=machine+learning+bias+&ei=hAgAY9KiB_qliLMP2deI-Ak&ved=0ahUKEwjS9MeP9NP5AhX6EmIAHdkrAp8Q4dUDCA4&uact=5&oq=machine+learning+bias+&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEOgcIABBHELADOgYIABAeEBY6BQgAEIYDOggIABAeEA8QFkoECEEYAEoECEYYAFC8AliEBmDJCGgBcAF4AIABaIgB1wKSAQMzLjGYAQCgAQHIAQjAAQE&sclient=gws-wiz",'_blank')}>Search</Button>
-                            <Button onClick = {() => setgamestatus(ANSWER4)}>Exit</Button>
+                            <Button onClick = {() => setstatus(ANSWER4)}>Exit</Button>
                         </Stack>
                         </div>      
                    </div>    
@@ -452,7 +462,7 @@ const Main = () =>{
                             <Button onClick = {() => window.open("https://www.vox.com/future-perfect/22916602/ai-bias-fairness-tradeoffs-artificial-intelligence",'_blank')}>Link1</Button>
                             <Button onClick = {() => window.open("https://www.mckinsey.com/featured-insights/artificial-intelligence/tackling-bias-in-artificial-intelligence-and-in-humans",'_blank')}>Link2</Button>
                             <Button onClick = {() => window.open("https://research.aimultiple.com/ai-bias/",'_blank')}>Link3</Button>
-                            <Button onClick = {() => setgamestatus(ANSWER4)}>Exit</Button>
+                            <Button onClick = {() => setstatus(ANSWER4)}>Exit</Button>
                         </Stack>
                         </div>      
                    </div>    
@@ -477,7 +487,7 @@ const Main = () =>{
                         <img src = {"../UI/conver.png"} width = "1200px" height = "550px"/>
                          </div>  
                          <div className = "ready-confirm">
-                            <ButtonSmall onClick = {() => setgamestatus(ANSWER4)}>Confirm</ButtonSmall>
+                            <ButtonSmall onClick = {() => setstatus(ANSWER4)}>Confirm</ButtonSmall>
                          </div> 
                    </div>
                    
@@ -514,7 +524,7 @@ const Main = () =>{
                             }
                             {   spined == true &&
                                <Stack spacing = {5} direction = "row">
-                                 <Button onClick = {()=> setgamestatus(CHOOSING2)}>Let's Explore</Button>
+                                 <Button onClick = {()=> setstatus(CHOOSING2)}>Let's Explore</Button>
                                  <Button onClick = {()=> spinwheel()}>Spin Again</Button>
                                </Stack>
                             }
@@ -548,7 +558,7 @@ const Main = () =>{
                 <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
             </div>
             <div className = "ready-confirm">
-            <ButtonSmall onClick = {() => setgamestatus(END2)}>Confirm</ButtonSmall>
+            <ButtonSmall onClick = {() => setstatus(END2)}>Confirm</ButtonSmall>
             </div>
             </div>
               }
@@ -567,8 +577,8 @@ const Main = () =>{
             </div>
             <div className = "choices-right">
                         <Stack spacing = {5} direction = "column">
-                            <Button onClick = {() => setgamestatus(END3)}>Yes</Button>
-                            <Button onClick = {() => setgamestatus(READY)}>No</Button>
+                            <Button onClick = {() => setstatus(END3)}>Yes</Button>
+                            <Button onClick = {() => setstatus(READY)}>No</Button>
                         </Stack>
                         </div>      
             </div>
@@ -601,7 +611,7 @@ const Main = () =>{
 
             </div>
             <div className = "ready-confirm">
-            <ButtonSmall onClick = {() => setgamestatus(END4)}>Confirm</ButtonSmall>
+            <ButtonSmall onClick = {() => setstatus(END4)}>Confirm</ButtonSmall>
             </div>
             </div>
               }
@@ -619,7 +629,7 @@ const Main = () =>{
                 <img src = {"../UI/resbubble.png"} width = "600px" height = "600px" />
             </div>
             <div className = "ready-confirm">
-            <ButtonSmall onClick = {() => setgamestatus(READY)}>Confirm</ButtonSmall>
+            <ButtonSmall onClick = {() => setstatus(READY)}>Confirm</ButtonSmall>
             </div>
             </div>
               }

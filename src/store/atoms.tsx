@@ -10,9 +10,9 @@ export const words = atom({
     default: "NA",
 })
 
-export const laststep = atom({
+export const laststep = atom<number[]>({
     key: "laststep",
-    default: 0,
+    default: [],
 })
 
 export const parentname = atom({

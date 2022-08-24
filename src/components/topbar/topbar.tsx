@@ -13,12 +13,23 @@ export const Topbar = () => {
     const [gamestatus, setgamestatus] = useRecoilState(status);
     const [last, setlast] = useRecoilState(laststep);
 
+    const back = () => {
+        if(last.length == 0){
+            console.log("triger")
+            return;
+        }
+        var lastcopy = [...last ];
+        var end = lastcopy[lastcopy.length-1];
+        console.log(lastcopy);
+        lastcopy.pop();
+        setgamestatus(end);
+        setlast(lastcopy);
+    }
+
     return (
     <div className = "topbar">
-        <Button className = "back">
-        <Link to = "/"  style={{ color: 'inherit', textDecoration: 'inherit'}} onClick = {() => setgamestatus(last)}> 
+        <Button className = "back" onClick = {() => back()}>
             <img  src = {"../UI/back.png"}  width="60px" height="30px"/>
-        </Link>
         </Button>
         <Button className = "home" onClick = {() => setgamestatus(READY)}>
         <Link to = "/"  style={{ color: 'inherit', textDecoration: 'inherit'}}> 

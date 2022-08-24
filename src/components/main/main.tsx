@@ -53,7 +53,10 @@ const Main = () =>{
       ]
 
     const setstatus = (input: number) => {
-        setlast(gamestatus);
+        var now:number = gamestatus;
+        var origin : number[] = [...last,];
+        origin.push(now);
+        setlast(origin);
         setgamestatus(input);
     }
 
